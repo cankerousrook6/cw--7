@@ -23,7 +23,7 @@ public class TransactionLogDao {
 
     private final RowMapper<TransactionLog> rowMapper = (rs, rowNum) -> TransactionLog.builder()
             .id(rs.getLong("id"))
-            .transactionId(rs.getLong("transaction_id"))
+            .transactionId(rs.getObject("transaction_id", Long.class))
             .senderUsername(rs.getString("sender_username"))
             .receiverUsername(rs.getString("receiver_username"))
             .senderAccountNumber(rs.getString("sender_account_number"))
@@ -56,7 +56,7 @@ public class TransactionLogDao {
                     sql,
                     new String[]{"id"}
             );
-            statement.setLong(1, log.getTransactionId());
+            statement.setObject(1, log.getTransactionId());
             statement.setString(2, log.getSenderUsername());
             statement.setString(3, log.getReceiverUsername());
             statement.setString(4, log.getSenderAccountNumber());
