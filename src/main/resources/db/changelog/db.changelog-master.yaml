@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/migrations/001_create_users_tbl.yaml
+  - include:
+      file: db/changelog/migrations/002_create_accounts_tbl.yaml
+  - include:
+      file: db/changelog/migrations/003_create_transactions_tbl.yaml
+  - include:
+      file: db/changelog/migrations/004_create_transaction_logs_tbl.yaml
+  - include:
+      file: db/changelog/migrations/005_create_rollback_logs_tbl.yaml
+  - include:
+      file: db/changelog/migrations/006_allow_null_transaction_id.yaml

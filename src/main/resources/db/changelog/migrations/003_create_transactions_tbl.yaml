@@ -1,0 +1,90 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-create-transactions-table
+      author: student
+      changes:
+        - createTable:
+            tableName: transactions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: sender_account_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: receiver_account_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: DECIMAL(19,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: VARCHAR(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: requires_approval
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: completed_at
+                  type: TIMESTAMP
+              - column:
+                  name: rolled_back_at
+                  type: TIMESTAMP
+              - column:
+                  name: deleted_at
+                  type: TIMESTAMP
+        - addForeignKeyConstraint:
+            baseTableName: transactions
+            baseColumnNames: sender_account_id
+            referencedTableName: accounts
+            referencedColumnNames: id
+            constraintName: fk_transactions_sender_account
+        - addForeignKeyConstraint:
+            baseTableName: transactions
+            baseColumnNames: receiver_account_id
+            referencedTableName: accounts
+            referencedColumnNames: id
+            constraintName: fk_transactions_receiver_account
+        - createIndex:
+            tableName: transactions
+            indexName: idx_transactions_sender
+            columns:
+              - column:
+                  name: sender_account_id
+        - createIndex:
+            tableName: transactions
+            indexName: idx_transactions_receiver
+            columns:
+              - column:
+                  name: receiver_account_id
+        - createIndex:
+            tableName: transactions
+            indexName: idx_transactions_status
+            columns:
+              - column:
+                  name: status

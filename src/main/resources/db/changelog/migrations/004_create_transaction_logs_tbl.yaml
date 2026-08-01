@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-transaction-logs-table
+      author: student
+      changes:
+        - createTable:
+            tableName: transaction_logs
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: transaction_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: sender_username
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: receiver_username
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sender_account_number
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: receiver_account_number
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: DECIMAL(19,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: VARCHAR(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: transaction_logs
+            baseColumnNames: transaction_id
+            referencedTableName: transactions
+            referencedColumnNames: id
+            constraintName: fk_transaction_logs_transaction
